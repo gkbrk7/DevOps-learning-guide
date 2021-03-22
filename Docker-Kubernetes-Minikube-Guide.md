@@ -1,73 +1,112 @@
-********** Install Docker CE Edition **********
-1. sudo apt-get update
-2. sudo apt-get install \
- apt-transport-https \
- ca-certificates \
- curl \
- software-properties-common
-3. curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo
-apt-key add -
-4. sudo add-apt-repository \
- "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
- $(lsb_release -cs) \
- stable"
-5. sudo apt-get update
-6. sudo apt-get install docker-ce
-7. docker version
+# Install Docker CE Edition
 
+```shell
+sudo apt-get update
 
+sudo apt-get install \
+apt-transport-https \
+ca-certificates \
+curl \
+software-properties-common
 
-********** Install KubeCtl **********
-1. curl -LO https://storage.googleapis.com/kubernetes-release/
-release/$(curl -s https://storage.googleapis.com/kubernetes-release/
-release/stable.txt)/bin/linux/amd64/kubectl
-2. chmod +x ./kubectl
-3. sudo mv ./kubectl /usr/local/bin/kubectl
-4. kubectl version
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
 
+sudo add-apt-repository \
+\"deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+$(lsb_release -cs) \
+stable\"
 
+sudo apt-get update
+sudo apt-get install docker-ce
+docker version
+```
 
-********** Install MiniKube **********
-1. curl -Lo minikube https://storage.googleapis.com/minikube/
-releases/latest/minikube-linux-amd64 && chmod +x minikube
-2. sudo install minikube /usr/local/bin
-********** Install VirtualBox **********
-1. wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc
--O- | sudo apt-key add -
-2. sudo apt-get update
-3. sudo apt-get install virtualbox
+# Install KubeCtl
 
+```shell
+curl -LO https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl
 
-********** Execute MiniKube & Create Cluster **********
-1. minikube start
+chmod +x ./kubectl
+sudo mv ./kubectl /usr/local/bin/kubectl
+kubectl version
+```
 
+# Install MiniKube
 
-********** Interact Cluster Using KubeCtl **********
-Go to https://minikube.sigs.k8s.io/docs/handbook/controls/ to setup echoserver
+```shell
+curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64 && chmod +x minikube
 
+sudo install minikube /usr/local/bin
+```
 
-(OBSOLETE)********** Interact Cluster Using KubeCtl **********
+# Install VirtualBox
+
+```shell
+wget -q https://www.virtualbox.org/download/oracle_vbox_2016.asc -O- | sudo apt-key add -
+
+sudo apt-get update
+sudo apt-get install virtualbox
+```
+
+# Execute MiniKube & Create Cluster
+
+```shell
+minikube start
+```
+
+# Interact Cluster Using KubeCtl
+
+- Go to https://minikube.sigs.k8s.io/docs/handbook/controls/ to setup echoserver latest version
+
+# (OBSOLETE)Interact Cluster Using KubeCtl
+
 Let’s create a Kubernetes Deployment using an existing image named
 echoserver, which is a simple HTTP server and expose it on port 8080
-using --port.
-1. kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --
-port=8080
+using --port. \
+
+```shell
+kubectl run hello-minikube --image=k8s.gcr.io/echoserver:1.10 --port=8080
+```
+
 We can inspect the pods and the deployments
-2. kubectl get pod
-3. kubectl get deployments
+
+```shell
+kubectl get pod
+kubectl get deployments
+```
+
 In order to access the hello-minikube service, we must first expose
 the deployment to an external IP via the command:
-4. kubectl expose deployment hello-minikube --type=NodePort
+
+```shell
+kubectl expose deployment hello-minikube --type=NodePort
+```
+
 Check if the service was exposed
-5. kubectl get services
+
+```shell
+kubectl get services
+```
+
 Get the URL of the exposed Service to view the Service details:
-6. minikube service hello-minikube --url
+
+```shell
+minikube service hello-minikube --url
+```
+
 Now we can either curl the service from the CLI, or hit it via the
 browser.
-7. curl $(minikube service hello-minikube --url)
-8. curl <URL>
+
+```shell
+curl $(minikube service hello-minikube --url)
+curl <URL>
+```
+
 Delete the Service
-9. kubectl delete services hello-minikube
-10. kubectl delete deployment hello-minikube
+
+```shell
+kubectl delete services hello-minikube
+kubectl delete deployment hello-minikube
 Stop the local Minikube cluster:
-11. minikube stop
+minikube stop
+```
