@@ -1,0 +1,11 @@
+version: "3.1"
+
+services:
+  s_portainer:
+    container_name: c_portainer
+    image: portainer/portainer-ce
+    ports:
+      - 9000:9000
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - /opt/app_data/portainer:/data
