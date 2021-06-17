@@ -1,0 +1,45 @@
+# Flutter Web App to Firebase
+# Build a Flutter Web project that uses Dart.
+# Add steps that analyze code, save build artifacts, deploy, and more:
+# Author : Gokberk YILDIRIM
+# Company : Pubinno
+
+trigger:
+  - master
+
+pool:
+  vmImage: ubuntu-latest
+
+variables:
+  - group: perfect-beer-admin-deploy
+
+steps:
+  - task: CmdLine@2
+    inputs:
+      script: |
+        sudo apt update && sudo snap install flutter --classic
+        sudo apt-get install clang cmake ninja-build pkg-config libgtk-3-dev
+        flutter config --enable-linux-desktop
+        pwd && ls -la
+        echo Flutter installed successfully!
+    displayName: "Install and Configure Flutter"
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        flutter build web
+        echo Flutter build finished...
+    displayName: "Build Flutter Web App"
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        sudo npm i -g firebase-tools
+    displayName: "Install Firebase-Tools"
+
+  - task: CmdLine@2
+    inputs:
+      script: |
+        firebase use $(project_id) --token=$(firebase_token)
+        firebase deploy --token=$(firebase_token)
+    displayName: "Deploy To Firebase"

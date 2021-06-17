@@ -1,0 +1,8 @@
+version: "3.1"
+
+services:
+  s_testapp:
+    image: gokberky/testapp
+    build:
+      context: .
+      #dockerfile: /opt/app_docs/testapp/Dockerfile
